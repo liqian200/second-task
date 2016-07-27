@@ -11,10 +11,13 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
      private TextView mTextView=null;
      private  List<Fruit> mFruitList;
      private ListView mlistview=null;
+     private FruitAdapter mFruitAdapter=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +57,20 @@ public class MainActivity extends AppCompatActivity {
             mFruitList.add(fruit);
         }
         //定义一个adapter
-        FruitAdapter fruitAdapter=new FruitAdapter(this,R.layout.list_item_fruit,mFruitList);
+        final FruitAdapter fruitAdapter=new FruitAdapter(this,R.layout.list_item_fruit,
+                mFruitList);
          mlistview= (ListView) findViewById(R.id.activitiy_mian_list_view);
          mlistview.setAdapter(fruitAdapter);
        //mlistview.setAdapter(fruitAdapter);
+        mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "你点了"+fruitAdapter.getItem(position).getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
     }
 
     @Override
